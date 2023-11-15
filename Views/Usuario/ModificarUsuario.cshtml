@@ -11,7 +11,7 @@ else
 {
     <div class="text-center">
         <h1 class="display-4">Modificar Usuario</h1>
-        <form asp-controller="Usuario" asp-action="ModificarUsuarioForm" method="post">
+        <form asp-controller="Usuario" asp-action="ModificarUsuario" method="post">
             <div class="mb-3">
                 <label for="nombre" class="form-label">Nombre</label>
                 <input asp-for="@Model.NombreDeUsuario" value="@Model.NombreDeUsuario" type="text" class="form-control"
