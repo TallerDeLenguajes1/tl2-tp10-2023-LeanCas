@@ -222,6 +222,7 @@ public class TareaRepositorio : ITareaRepositorio
                 command.Parameters.Add(new SQLiteParameter("@nombre", tarea.Nombre));
                 command.Parameters.Add(new SQLiteParameter("@estado", tarea.Estado));
                 command.Parameters.Add(new SQLiteParameter("@descripcion", tarea.Descripcion));
+                command.Parameters.Add(new SQLiteParameter("@color", tarea.Color));
                 command.Parameters.Add(new SQLiteParameter("@id_u_asignado", tarea.IdUsuarioAsignado));
 
                 command.ExecuteNonQuery();
