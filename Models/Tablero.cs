@@ -1,5 +1,6 @@
 
-public class Tablero {
+public class Tablero
+{
     private int _id;
     private int _idUsuarioPropietario;
     private string _nombre;
