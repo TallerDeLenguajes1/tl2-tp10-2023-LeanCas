@@ -1,10 +1,10 @@
+using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using tp10_tl2.Models;
 
-namespace webapi.Controllers;
+namespace tp10_tl2.Controllers;
 
-[ApiController]
-[Route("[controller]")]
-public class TableroController : ControllerBase
+public class TableroController : Controller
 {
 
     private readonly ILogger<TableroController> _logger;
@@ -17,26 +17,49 @@ public class TableroController : ControllerBase
         repository = new TableroRepositorio();
     }
 
-    [HttpPost]
-    [Route("CrearTablero")]
-    public ActionResult<Tarea> CrearTablero(int idTablero)
+    public IActionResult Index()
     {
-        return Ok("El tablero fue creado con exito");
+        var tableros = repository.GetAll();
+        return View(tableros);
     }
 
     [HttpGet]
-    [Route("ListarTableros")]
-    public ActionResult<List<Tablero>> ListarTableros()
+    public IActionResult CrearTablero()
     {
-        var tableros = repository.GetAll();
-        if (tableros == null)
-        {
-            return BadRequest("No se pudo listar ningun tablero");
-        }
-        else
-        {
-            return Ok("Tableros listados: " + tableros);
-        }
+        return View(new Tablero());
+    }
+
+    [HttpPost]
+    public IActionResult CrearTablero(Tablero tablero) // Le añadi el [FromForm] porque sino no anda 
+    {
+        repository.Create(tablero);
+        return RedirectToAction("Index");
+    }
+
+    [HttpGet]
+    public IActionResult ModificarTablero(int id)
+    {
+        var tablero = repository.GetTablero(id);
+        return View(tablero);
+    }
+
+    [HttpPost]
+    public IActionResult ModificarTablero(int id, Tablero tablero)
+    {
+        repository.Set(id, tablero);
+        return RedirectToAction("Index");
+    }
+
+    public IActionResult EliminarTablero(int id)
+    {
+        repository.Delete(id);
+        return RedirectToAction("Index");
+    }
+
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    public IActionResult Error()
+    {
+        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 
 }

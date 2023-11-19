@@ -32,6 +32,19 @@ public class TareaController : Controller
         return View(listaTareas);
     }
 
+    [HttpGet]
+    public IActionResult CrearTarea(int id)
+    {
+        return View(new Tarea());
+    }
+
+    [HttpPost]
+    public IActionResult CrearTarea(int id, Tarea tarea)
+    {
+        repository.Create(id, tarea);
+        return RedirectToAction("Index");
+    }
+
 
     [HttpGet]
     public IActionResult TareasUsuario(int id)
@@ -54,6 +67,7 @@ public class TareaController : Controller
         repository.Set(id, tarea);
         return RedirectToAction("Index");
     }
+
     public IActionResult EliminarTarea(int id)
     {
         repository.Delete(id);

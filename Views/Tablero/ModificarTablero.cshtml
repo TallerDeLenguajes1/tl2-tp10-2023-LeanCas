@@ -1,0 +1,27 @@
+@model Tablero
+
+@if (String.IsNullOrEmpty(Model.Nombre))
+{
+    <article>
+        <p><strong>ERROR 404</strong></p>
+    </article>
+
+}
+else
+{
+    <div class="text-center">
+        <h1 class="display-4">Modificar Tablero</h1>
+        <form asp-controller="Tablero" asp-action="ModificarTablero" method="post">
+            <div class="mb-3">
+                <label for="id-u" class="form-label">ID Usuario Asignado</label>
+                <input asp-for="@Model.IdUsuarioPropietario" type="text" class="form-control" id="id-u">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input asp-for="@Model.Nombre" type="text" class="form-control" id="nombre">
+                <label for="descripcion" class="form-label">Descripcion</label>
+                <input asp-for="@Model.Descripcion" type="text" class="form-control" id="descripcion">
+                <input hidden asp-for="@Model.Id">
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+    </div>
+}

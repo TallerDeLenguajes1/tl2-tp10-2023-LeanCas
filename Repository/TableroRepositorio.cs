@@ -10,7 +10,7 @@ public class TableroRepositorio : ITableroRepositorio
     {
         try
         {
-            var queryString = @" INSERT INTO Tablero (id_usuario_propietario,nombre,descripcion) VALUES (@id_u_propietarioa, @nombre, @descripcion);";
+            var queryString = @"INSERT INTO Tablero (id_usuario_propietario,nombre,descripcion) VALUES (@id_u_propietario, @nombre, @descripcion);";
 
             using (var connection = new SQLiteConnection(cadenaConexion))
             {
@@ -36,7 +36,7 @@ public class TableroRepositorio : ITableroRepositorio
     {
         try
         {
-            var queryString = @"DELETE FROM Tablero WHERE Usuario.id = (@id_tablero);";
+            var queryString = @"DELETE FROM Tablero WHERE Tablero.id = (@id_tablero);";
             using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
             {
                 connection.Open();
@@ -173,7 +173,8 @@ public class TableroRepositorio : ITableroRepositorio
                 connection.Open();
 
                 var command = new SQLiteCommand(queryString, connection);
-                command.Parameters.Add(new SQLiteParameter("@id", id));
+                command.Parameters.Add(new SQLiteParameter("@id_buscar", id));
+                command.Parameters.Add(new SQLiteParameter("@id", tablero.Id));
                 command.Parameters.Add(new SQLiteParameter("@id_u_propietario", tablero.IdUsuarioPropietario));
                 command.Parameters.Add(new SQLiteParameter("@nombre", tablero.Nombre));
                 command.Parameters.Add(new SQLiteParameter("@descripcion", tablero.Descripcion));
