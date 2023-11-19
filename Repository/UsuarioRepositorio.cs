@@ -12,13 +12,15 @@ public class UsuarioRepositorio : IUsuarioRepositorio
     {
         try
         {
-            var queryString = @"INSERT INTO Usuario (nombre_de_usuario) VALUES (@nombre_de_usuario);";
+            var queryString = @"INSERT INTO Usuario (nombre_de_usuario, rol, password) VALUES (@nombre_de_usuario, @rol, @password);";
             using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
             {
                 connection.Open();
                 var command = new SQLiteCommand(queryString, connection);
 
                 command.Parameters.Add(new SQLiteParameter("@nombre_de_usuario", usuario.NombreDeUsuario));
+                command.Parameters.Add(new SQLiteParameter("@rol", usuario.Rol));
+                command.Parameters.Add(new SQLiteParameter("@password", usuario.Password));
                 command.ExecuteNonQuery();
 
                 connection.Close();
@@ -72,13 +74,42 @@ public class UsuarioRepositorio : IUsuarioRepositorio
                         var usuario = new Usuario();
                         usuario.Id = Convert.ToInt32(reader["id"]);
                         usuario.NombreDeUsuario = reader["nombre_de_usuario"].ToString();
+                        if (!reader.IsDBNull(reader.GetOrdinal("rol")))
+                        {
+                            // Obtener el valor de la columna "rol"
+                            string rolString = reader["rol"].ToString();
+
+                            Rol rolUsuario;
+
+                            // Verificar si la cadena es nula o vacía
+                            if (!string.IsNullOrEmpty(rolString))
+                            {
+                                if (Enum.TryParse(rolString, out rolUsuario))
+                                {
+                                    usuario.Rol = rolUsuario;
+                                }
+                                else
+                                {
+                                    usuario.Rol = null;
+                                }
+                            }
+                            else
+                            {
+                                usuario.Rol = null;
+                            }
+                        }
+                        if (!reader.IsDBNull(reader.GetOrdinal("password")))
+                        {
+                            usuario.Password = reader["password"].ToString();
+                        }
                         users.Add(usuario);
                     }
-                }
 
-                connection.Close();
+                    connection.Close();
+                }
+                return users;
             }
-            return users;
+
         }
         catch
         {
@@ -106,6 +137,13 @@ public class UsuarioRepositorio : IUsuarioRepositorio
                         var usuario = new Usuario();
                         usuario.Id = Convert.ToInt32(reader["id"]);
                         usuario.NombreDeUsuario = reader["nombre_de_usuario"].ToString();
+                        string rolString = reader["rol"].ToString();
+                        Rol rolUsuario;
+                        if (Enum.TryParse(rolString, out rolUsuario))
+                        {
+                            usuario.Rol = rolUsuario;
+                        }
+                        usuario.Password = reader["password"].ToString();
                         users.Add(usuario);
                     }
                 }
@@ -127,7 +165,7 @@ public class UsuarioRepositorio : IUsuarioRepositorio
         try
         {
             var usuarioVerificado = new Usuario();
-            var queryString = @"SELECT * FROM Usuario WHERE nombre_de_usuario = @nombreUsuario AND contrasenia = @password;";
+            var queryString = @"SELECT * FROM Usuario WHERE nombre_de_usuario = @nombreUsuario AND password = @password;";
             using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
             {
                 connection.Open();
@@ -144,7 +182,13 @@ public class UsuarioRepositorio : IUsuarioRepositorio
                     {
                         usuarioVerificado.Id = Convert.ToInt32(reader["id"]);
                         usuarioVerificado.NombreDeUsuario = reader["nombre_de_usuario"].ToString();
-
+                        string rolString = reader["rol"].ToString();
+                        Rol rolUsuario;
+                        if (Enum.TryParse(rolString, out rolUsuario))
+                        {
+                            usuarioVerificado.Rol = rolUsuario;
+                        }
+                        usuarioVerificado.Password = reader["password"].ToString();
                     }
                 }
 
