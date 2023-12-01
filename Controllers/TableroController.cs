@@ -19,19 +19,35 @@ public class TableroController : Controller
 
     public IActionResult Index()
     {
-        var tableros = repository.GetAll();
-        return View(tableros);
+        var ListarTableroViewModel = new ListarTableroViewModel();
+        if ((!string.IsNullOrEmpty(HttpContext.Session.GetString("usuario")) && (HttpContext.Session.GetString("rol")) == "Administrador"))
+        {
+            var tableros = repository.GetAll();
+            var tablerosViewModel = ListarTableroViewModel.convertirLista(tableros);
+            return View(tablerosViewModel);
+        }
+        else if (!string.IsNullOrEmpty(HttpContext.Session.GetString("usuario")) && (HttpContext.Session.GetString("rol")) == "Operador")
+        {
+            var tablerosPorID = repository.GetTableroUsuario(Convert.ToInt32(HttpContext.Session.GetString("id")));
+            var tablerosPorIDViewModel = ListarTableroViewModel.convertirLista(tablerosPorID);
+            return View(tablerosPorIDViewModel);
+        }
+        else
+        {
+            return RedirectToRoute(new { controller = "Logueo", action = "Index" });
+        }
     }
 
     [HttpGet]
     public IActionResult CrearTablero()
     {
-        return View(new Tablero());
+        return View(new CrearTableroViewModel());
     }
 
     [HttpPost]
-    public IActionResult CrearTablero(Tablero tablero) // Le añadi el [FromForm] porque sino no anda 
+    public IActionResult CrearTablero(CrearTableroViewModel tableroViewModel)
     {
+        var tablero = new Tablero(tableroViewModel.IdUsuarioPropietario, tableroViewModel.Nombre, tableroViewModel.Descripcion);
         repository.Create(tablero);
         return RedirectToAction("Index");
     }
@@ -40,12 +56,15 @@ public class TableroController : Controller
     public IActionResult ModificarTablero(int id)
     {
         var tablero = repository.GetTablero(id);
-        return View(tablero);
+        var tableroViewModel = new ModificarTableroViewModel(tablero);
+        return View(tableroViewModel);
     }
 
     [HttpPost]
-    public IActionResult ModificarTablero(int id, Tablero tablero)
+    public IActionResult ModificarTablero(int id, ModificarTableroViewModel tableroViewModel)
     {
+        var viewModel = new ModificarTableroViewModel();
+        var tablero = viewModel.convertirTablero(tableroViewModel);
         repository.Set(id, tablero);
         return RedirectToAction("Index");
     }

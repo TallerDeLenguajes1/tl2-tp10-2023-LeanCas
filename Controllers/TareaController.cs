@@ -28,19 +28,30 @@ public class TareaController : Controller
 
     public IActionResult Index()
     {
-        var listaTareas = repository.GetAll();
-        return View(listaTareas);
+        if (!string.IsNullOrEmpty(HttpContext.Session.GetString("usuario")) && (HttpContext.Session.GetString("rol")) == "Administrador")
+        {
+            var listaTareas = repository.GetAll();
+            var listaTareasViewModel = new ListarTareaViewModel();
+            var tareasViewModel = listaTareasViewModel.convertirLista(listaTareas);
+            return View(tareasViewModel);
+        }
+        else
+        {
+            return RedirectToRoute(new { controller = "Logueo", action = "Index" });
+        }
+
     }
 
     [HttpGet]
     public IActionResult CrearTarea(int id)
     {
-        return View(new Tarea());
+        return View(new CrearTareaViewModel());
     }
 
     [HttpPost]
-    public IActionResult CrearTarea(int id, Tarea tarea)
+    public IActionResult CrearTarea(int id, CrearTareaViewModel tareaViewModel)
     {
+        var tarea = new Tarea(tareaViewModel.Nombre, tareaViewModel.Descripcion, tareaViewModel.Color, tareaViewModel.Estado, tareaViewModel.IdUsuarioAsignado);
         repository.Create(id, tarea);
         return RedirectToAction("Index");
     }
@@ -50,7 +61,9 @@ public class TareaController : Controller
     public IActionResult TareasUsuario(int id)
     {
         var listaTareas = repository.GetAll();
-        var listaTareasPorId = listaTareas.FindAll(T => T.IdUsuarioAsignado == id);
+        var listaTareasViewModel = new ListarTareaViewModel();
+        var tareasViewModel = listaTareasViewModel.convertirLista(listaTareas);
+        var listaTareasPorId = tareasViewModel.FindAll(T => T.IdUsuarioAsignado == id);
         return View(listaTareasPorId);
     }
 
@@ -58,12 +71,15 @@ public class TareaController : Controller
     public IActionResult ModificarTarea(int id)
     {
         var tarea = repository.GetTarea(id);
-        return View(tarea);
+        var tareaViewModel = new ModificarTareaViewModel(tarea);
+        return View(tareaViewModel);
     }
 
     [HttpPost]
-    public IActionResult ModificarTarea(int id, Tarea tarea)
+    public IActionResult ModificarTarea(int id, ModificarTareaViewModel tareaViewModel)
     {
+        var viewModel = new ModificarTareaViewModel();
+        var tarea = viewModel.convertirTarea(tareaViewModel);
         repository.Set(id, tarea);
         return RedirectToAction("Index");
     }

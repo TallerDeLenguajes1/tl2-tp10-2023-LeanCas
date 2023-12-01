@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Usuario";
 }
-@model List<Usuario>
+@model List<tp10_tl2.Models.ListarUsuarioViewModel>;
 
 <div class="text-center">
     <h1 class="display-4">Control de Usuarios</h1>
@@ -20,7 +20,7 @@
             {
                 <tr>
                     <th scope="row">@u.Id</th>
-                    <td>@u.NombreDeUsuario</td>
+                    <td>@u.Nombre</td>
                     <td>
                         <a class="actualizar" asp-controller="Usuario" asp-action="ModificarUsuario"
                             asp-route-id="@u.Id">Modificar</a>

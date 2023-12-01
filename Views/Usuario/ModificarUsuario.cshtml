@@ -1,6 +1,6 @@
-@model Usuario
+@model tp10_tl2.Models.ModificarUsuarioViewModel;
 
-@if (String.IsNullOrEmpty(Model.NombreDeUsuario))
+@if (String.IsNullOrEmpty(Model.Nombre))
 {
     <article>
         <p><strong>ERROR 404</strong></p>
@@ -14,8 +14,7 @@ else
         <form asp-controller="Usuario" asp-action="ModificarUsuario" method="post">
             <div class="mb-3">
                 <label for="nombre" class="form-label">Nombre</label>
-                <input asp-for="@Model.NombreDeUsuario" value="@Model.NombreDeUsuario" type="text" class="form-control"
-                    id="nombre">
+                <input asp-for="@Model.Nombre" value="@Model.Nombre" type="text" class="form-control" id="nombre">
                 <input hidden asp-for="@Model.Id">
             </div>
             <button type="submit" class="btn btn-primary">Enviar</button>

@@ -3,16 +3,21 @@
     ViewData["Title"] = "Login";
 }
 
-<h1 class="text-center">Logueo</h1>
-<form asp-controller="Logueo">
+<h1 class="text-center">Login</h1>
+<form asp-controller="Logueo" asp-action="LogueoVerificar" method="post">
     <div class="mb-3">
         <label for="usuario" class="form-label">Usuario</label>
-        <input type="text" class="form-control" id="usuario" aria-describedby="usuarioHelp">
+        <input asp-for="@Model.NombreUsuario" type="text" class="form-control" id="usuario"
+            aria-describedby="usuarioHelp">
         <div id="usuarioHelp" class="form-text">Ingresa tu nombre de usuario</div>
     </div>
     <div class="mb-3">
         <label for="exampleInputPassword1" class="form-label">Password</label>
-        <input type="password" class="form-control" id="exampleInputPassword1">
+        <input asp-for="@Model.Password" type="password" class="form-control" id="exampleInputPassword1">
     </div>
     <button type="submit" class="btn btn-primary">Ingresar</button>
 </form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

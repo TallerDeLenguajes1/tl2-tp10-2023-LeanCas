@@ -165,7 +165,7 @@ public class UsuarioRepositorio : IUsuarioRepositorio
         try
         {
             var usuarioVerificado = new Usuario();
-            var queryString = @"SELECT * FROM Usuario WHERE nombre_de_usuario = @nombreUsuario AND password = @password;";
+            var queryString = @"SELECT * FROM Usuario WHERE (nombre_de_usuario = @nombreUsuario AND password = @password);";
             using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
             {
                 connection.Open();

@@ -21,4 +21,10 @@ public class Usuario
     public string? NombreDeUsuario { get => _nombreDeUsuario; set => _nombreDeUsuario = value; }
     public string? Password { get => _password; set => _password = value; }
     public Rol? Rol { get => _rol; set => _rol = value; }
+
+    public Usuario() { }
+    public Usuario(string? Nombre)
+    {
+        this.NombreDeUsuario = Nombre;
+    }
 }

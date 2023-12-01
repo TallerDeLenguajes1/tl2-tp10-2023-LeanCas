@@ -8,7 +8,6 @@ public class UsuarioController : Controller
 {
 
     private readonly ILogger<UsuarioController> _logger;
-
     private readonly IUsuarioRepositorio repository;
 
     public UsuarioController(ILogger<UsuarioController> logger)
@@ -20,19 +19,30 @@ public class UsuarioController : Controller
 
     public IActionResult Index()
     {
-        var usuarios = repository.GetAll();
-        return View(usuarios);
+
+        if (!string.IsNullOrEmpty(HttpContext.Session.GetString("usuario")) && (HttpContext.Session.GetString("rol")) == "Administrador")
+        {
+            var usuarios = repository.GetAll();
+            var listarUsuarioViewModel = new ListarUsuarioViewModel();
+            var usuariosViewModel = listarUsuarioViewModel.convertirLista(usuarios);
+            return View(usuariosViewModel);
+        }
+        else
+        {
+            return RedirectToRoute(new { controller = "Logueo", action = "Index" });
+        }
     }
 
     [HttpGet]
     public IActionResult CrearUsuario()
     {
-        return View(new Usuario());
+        return View(new CrearUsuarioViewModel());
     }
 
     [HttpPost]
-    public IActionResult CrearUsuario(Usuario usuario) // Le añadi el [FromForm] porque sino no anda 
+    public IActionResult CrearUsuario(CrearUsuarioViewModel usuarioViewModel)
     {
+        var usuario = new Usuario(usuarioViewModel.Nombre);
         repository.Create(usuario);
         return RedirectToAction("Index");
     }
@@ -42,12 +52,15 @@ public class UsuarioController : Controller
     public IActionResult ModificarUsuario(int id)
     {
         var usuario = repository.GetUsuario(id);
-        return View(usuario);
+        var usuarioViewModel = new ModificarUsuarioViewModel(usuario);
+        return View(usuarioViewModel);
     }
 
     [HttpPost]
-    public IActionResult ModificarUsuario(int id, Usuario usuario)
+    public IActionResult ModificarUsuario(int id, ModificarUsuarioViewModel usuarioViewModel)
     {
+        var viewModel = new ModificarUsuarioViewModel();
+        var usuario = viewModel.convertirUsuario(usuarioViewModel);
         repository.Set(id, usuario);
         return RedirectToAction("Index");
     }
