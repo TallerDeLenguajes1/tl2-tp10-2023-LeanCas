@@ -15,9 +15,14 @@ else
             <div class="mb-3">
                 <label for="nombre" class="form-label">Nombre</label>
                 <input asp-for="@Model.Nombre" value="@Model.Nombre" type="text" class="form-control" id="nombre">
+                <span asp-validation-for="@Model.Nombre" class="text-danger"></span>
                 <input hidden asp-for="@Model.Id">
             </div>
             <button type="submit" class="btn btn-primary">Enviar</button>
         </form>
     </div>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
 }

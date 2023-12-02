@@ -2,7 +2,7 @@
     ViewData["Title"] = "ModificarTarea";
 }
 
-@model Tarea
+@model tp10_tl2.Models.ModificarTareaViewModel
 
 @if (String.IsNullOrEmpty(Model.Nombre))
 {
@@ -19,10 +19,16 @@ else
             <div class="mb-3">
                 <label for="nombre" class="form-label">Nombre</label>
                 <input asp-for="@Model.Nombre" value="@Model.Nombre" type="text" class="form-control" id="nombre">
+                <span asp-validation-for="@Model.Nombre" class="text-danger"></span>
+
                 <label for="desc" class="form-label">Descripcion</label>
                 <input asp-for="@Model.Descripcion" value="@Model.Descripcion" type="text" class="form-control" id="desc">
+                <span asp-validation-for="@Model.Descripcion" class="text-danger"></span>
+
                 <label for="color" class="form-label">Color</label>
                 <input asp-for="@Model.Color" value="@Model.Color" type="text" class="form-control" id="color">
+                <span asp-validation-for="@Model.Color" class="text-danger"></span>
+
                 <label for="estado" class="form-label">Estado</label>
                 <select asp-for="@Model.Estado" class="form-control" id="estado">
                     <option value="Ideas">Ideas</option>
@@ -31,12 +37,19 @@ else
                     <option value="Review">Review</option>
                     <option value="Done">Done</option>
                 </select>
+
                 <label for="usu" class="form-label">Usuario Asignado</label>
                 <input asp-for="@Model.IdUsuarioAsignado" value="@Model.IdUsuarioAsignado" type="text" class="form-control"
                     id="usu">
+                <span asp-validation-for="@Model.IdUsuarioAsignado" class="text-danger"></span>
+
                 <input hidden asp-for="@Model.Id">
             </div>
             <button type="submit" class="btn btn-primary">Enviar</button>
         </form>
     </div>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
 }

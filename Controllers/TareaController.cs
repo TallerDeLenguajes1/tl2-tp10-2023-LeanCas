@@ -51,6 +51,7 @@ public class TareaController : Controller
     [HttpPost]
     public IActionResult CrearTarea(int id, CrearTareaViewModel tareaViewModel)
     {
+        if (!ModelState.IsValid) return RedirectToAction("Index");
         var tarea = new Tarea(tareaViewModel.Nombre, tareaViewModel.Descripcion, tareaViewModel.Color, tareaViewModel.Estado, tareaViewModel.IdUsuarioAsignado);
         repository.Create(id, tarea);
         return RedirectToAction("Index");
@@ -78,6 +79,7 @@ public class TareaController : Controller
     [HttpPost]
     public IActionResult ModificarTarea(int id, ModificarTareaViewModel tareaViewModel)
     {
+        if (!ModelState.IsValid) return RedirectToAction("Index");
         var viewModel = new ModificarTareaViewModel();
         var tarea = viewModel.convertirTarea(tareaViewModel);
         repository.Set(id, tarea);

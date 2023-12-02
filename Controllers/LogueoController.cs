@@ -27,7 +27,6 @@ public class LogueoController : Controller
     public IActionResult LogueoVerificar(LogueoViewModel login)
     {
         var usuarioVerificar = repository.VerificarUsuario(login.NombreUsuario, login.Password);
-        if (!ModelState.IsValid) return RedirectToAction("Index");
         if (string.IsNullOrEmpty(usuarioVerificar.NombreDeUsuario))
         {
             return RedirectToAction("Index");

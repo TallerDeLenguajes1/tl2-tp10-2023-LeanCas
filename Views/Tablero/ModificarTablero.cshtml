@@ -15,13 +15,23 @@ else
             <div class="mb-3">
                 <label for="id-u" class="form-label">ID Usuario Asignado</label>
                 <input asp-for="@Model.IdUsuarioPropietario" type="text" class="form-control" id="id-u">
+                <span asp-validation-for="@Model.IdUsuarioPropietario" class="text-danger"></span>
+
                 <label for="nombre" class="form-label">Nombre</label>
                 <input asp-for="@Model.Nombre" type="text" class="form-control" id="nombre">
+                <span asp-validation-for="@Model.Nombre" class="text-danger"></span>
+
                 <label for="descripcion" class="form-label">Descripcion</label>
                 <input asp-for="@Model.Descripcion" type="text" class="form-control" id="descripcion">
+                <span asp-validation-for="@Model.Descripcion" class="text-danger"></span>
+
                 <input hidden asp-for="@Model.Id">
             </div>
             <button type="submit" class="btn btn-primary">Enviar</button>
         </form>
     </div>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
 }

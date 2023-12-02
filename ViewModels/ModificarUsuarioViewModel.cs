@@ -7,6 +7,9 @@ public class ModificarUsuarioViewModel
 {
     private int _id;
     private string? _nombre;
+
+    [Required(ErrorMessage = "Este campo es requerido")]
+    [Display(Name = "Nombre de usuario")]
     public string? Nombre { get => _nombre; set => _nombre = value; }
     public int Id { get => _id; set => _id = value; }
 

@@ -29,10 +29,20 @@ public class ModificarTareaViewModel
 
 
     public int Id { get => _id; set => _id = value; }
+
+    [Required(ErrorMessage = "Este campo es requerido")]
     public string? Nombre { get => _nombre; set => _nombre = value; }
+
+    [Required(ErrorMessage = "Este campo es requerido")]
     public string? Descripcion { get => _descripcion; set => _descripcion = value; }
+
+    [Required(ErrorMessage = "Este campo es requerido")]
     public string? Color { get => _color; set => _color = value; }
+
+    [Required(ErrorMessage = "Este campo es requerido")]
     public Estado Estado { get => _estado; set => _estado = value; }
+
+    [Required(ErrorMessage = "Este campo es requerido")]
     public int? IdUsuarioAsignado { get => _idUsuarioAsignado; set => _idUsuarioAsignado = value; }
 
     public Tarea convertirTarea(ModificarTareaViewModel tareaViewModel)

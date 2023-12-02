@@ -22,9 +22,16 @@ public class CrearTableroViewModel
         _descripcion = tablero.Descripcion;
     }
 
+    [Required(ErrorMessage = "Este campo es requerido")]
     public int IdUsuarioPropietario { get => _idUsuarioPropietario; set => _idUsuarioPropietario = value; }
+
+    [Required(ErrorMessage = "Este campo es requerido")]
     public string? Nombre { get => _nombre; set => _nombre = value; }
+
+    [Required(ErrorMessage = "Este campo es requerido")]
     public string? Descripcion { get => _descripcion; set => _descripcion = value; }
+
+    [Required(ErrorMessage = "Este campo es requerido")]
     public int Id { get => _id; set => _id = value; }
 
 }

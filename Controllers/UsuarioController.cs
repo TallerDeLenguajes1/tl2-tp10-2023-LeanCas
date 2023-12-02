@@ -42,6 +42,7 @@ public class UsuarioController : Controller
     [HttpPost]
     public IActionResult CrearUsuario(CrearUsuarioViewModel usuarioViewModel)
     {
+        if (!ModelState.IsValid) return RedirectToAction("Index");
         var usuario = new Usuario(usuarioViewModel.Nombre);
         repository.Create(usuario);
         return RedirectToAction("Index");
@@ -59,6 +60,7 @@ public class UsuarioController : Controller
     [HttpPost]
     public IActionResult ModificarUsuario(int id, ModificarUsuarioViewModel usuarioViewModel)
     {
+        if (!ModelState.IsValid) return RedirectToAction("Index");
         var viewModel = new ModificarUsuarioViewModel();
         var usuario = viewModel.convertirUsuario(usuarioViewModel);
         repository.Set(id, usuario);

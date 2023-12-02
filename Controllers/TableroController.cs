@@ -47,6 +47,7 @@ public class TableroController : Controller
     [HttpPost]
     public IActionResult CrearTablero(CrearTableroViewModel tableroViewModel)
     {
+        if (!ModelState.IsValid) return RedirectToAction("Index");
         var tablero = new Tablero(tableroViewModel.IdUsuarioPropietario, tableroViewModel.Nombre, tableroViewModel.Descripcion);
         repository.Create(tablero);
         return RedirectToAction("Index");
@@ -63,6 +64,7 @@ public class TableroController : Controller
     [HttpPost]
     public IActionResult ModificarTablero(int id, ModificarTableroViewModel tableroViewModel)
     {
+        if (!ModelState.IsValid) return RedirectToAction("Index");
         var viewModel = new ModificarTableroViewModel();
         var tablero = viewModel.convertirTablero(tableroViewModel);
         repository.Set(id, tablero);
