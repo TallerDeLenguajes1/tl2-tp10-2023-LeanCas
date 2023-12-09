@@ -86,7 +86,7 @@ public class TareaController : Controller
     public IActionResult ModificarTarea(int id)
     {
         var tarea = repository.GetTarea(id);
-        var tareaViewModel = new ModificarTareaViewModel(tarea);
+        var tareaViewModel = new ModificarTareaViewModel(tarea, GetUsuarios(), GetTableros());
         return View(tareaViewModel);
     }
 

@@ -17,7 +17,16 @@ public class ModificarTareaViewModel
     private Estado _estado;
 
     private int? _idUsuarioAsignado;
+
+    private List<Usuario> listaUsuario = new List<Usuario>();
+    private List<Tablero> listaTablero = new List<Tablero>();
     public ModificarTareaViewModel() { }
+
+    public ModificarTareaViewModel(List<Usuario> usuarioList, List<Tablero> tableroList)
+    {
+        this.listaUsuario = usuarioList;
+        this.listaTablero = tableroList;
+    }
 
     public ModificarTareaViewModel(Tarea tarea)
     {
@@ -28,6 +37,19 @@ public class ModificarTareaViewModel
         Estado = tarea.Estado;
         _idUsuarioAsignado = tarea.IdUsuarioAsignado;
     }
+
+    public ModificarTareaViewModel(Tarea tarea, List<Usuario> usuarioList, List<Tablero> tableroList)
+    {
+        _id = tarea.Id;
+        _nombre = tarea.Nombre;
+        _descripcion = tarea.Descripcion;
+        _color = tarea.Color;
+        Estado = tarea.Estado;
+        _idUsuarioAsignado = tarea.IdUsuarioAsignado;
+        this.listaUsuario = usuarioList;
+        this.listaTablero = tableroList;
+    }
+
 
 
     public int Id { get => _id; set => _id = value; }
@@ -47,6 +69,8 @@ public class ModificarTareaViewModel
 
     [Required(ErrorMessage = "Este campo es requerido")]
     public int IdTablero { get => _idTablero; set => _idTablero = value; }
+    public List<Usuario> ListaUsuario { get => listaUsuario; set => listaUsuario = value; }
+    public List<Tablero> ListaTablero { get => listaTablero; set => listaTablero = value; }
 
     public Tarea convertirTarea(ModificarTareaViewModel tareaViewModel)
     {

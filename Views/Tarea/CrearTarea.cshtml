@@ -10,15 +10,15 @@
         <div class="mb-3">
             <label for="nombre" class="form-label">Nombre</label>
             <input asp-for="@Model.Nombre" type="text" class="form-control" id="nombre">
-            <span asp-validation-for="@Model.Nombre" class="text-danger"></span>
+            <span asp-validation-for="@Model.Nombre" class="text-danger"></span><br>
 
             <label for="desc" class="form-label">Descripcion</label>
             <input asp-for="@Model.Descripcion" type="text" class="form-control" id="desc">
-            <span asp-validation-for="@Model.Descripcion" class="text-danger"></span>
+            <span asp-validation-for="@Model.Descripcion" class="text-danger"></span><br>
 
             <label for="color" class="form-label">Color</label>
             <input asp-for="@Model.Color" type="text" class="form-control" id="color">
-            <span asp-validation-for="@Model.Color" class="text-danger"></span>
+            <span asp-validation-for="@Model.Color" class="text-danger"></span><br>
 
             <label for="estado" class="form-label">Estado</label>
             <select asp-for="@Model.Estado" class="form-control" id="estado">
@@ -31,7 +31,6 @@
 
             <label for="usu" class="form-label">Usuario Asignado</label>
             <select asp-for="@Model.IdUsuarioAsignado" class="form-control" id="usu">
-                <option value="0" selected>Sin Asignar</option>
                 @foreach (var U in @Model.ListaUsuario)
                 {
                     <option value="@U.Id">@U.NombreDeUsuario</option>
@@ -42,7 +41,6 @@
 
             <label for="tablero" class="form-label">Tablero Asignado</label>
             <select asp-for="@Model.IdTablero" class="form-control" id="tablero">
-                <option value="0" selected>Sin Asignar</option>
                 @foreach (var T in @Model.ListaTablero)
                 {
                     <option value="@T.Id">@T.Nombre</option>
