@@ -1,6 +1,9 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using tp10_tl2.Models;
+using TareaRepository;
+using TableroRepository;
+using UsuarioRepository;
 
 namespace tp10_tl2.Controllers;
 
@@ -10,30 +13,31 @@ public class TareaController : Controller
     private readonly ILogger<TareaController> _logger;
 
     private readonly ITareaRepositorio repository;
+    private readonly ITableroRepositorio TableroRepository;
+    private readonly IUsuarioRepositorio UsuarioRepository;
+    private readonly ListarTareaViewModel listartareaVM = new ListarTareaViewModel();
 
-    public TareaController(ILogger<TareaController> logger)
+    public TareaController(ILogger<TareaController> logger, ITareaRepositorio TareaRepository, ITableroRepositorio tableroRepositorio, IUsuarioRepositorio usuarioRepositorio)
     {
         _logger = logger;
-        repository = new TareaRepositorio();
+        repository = TareaRepository;
+        TableroRepository = tableroRepositorio;
+        UsuarioRepository = usuarioRepositorio;
     }
-    /* CREAR TAREA
-        [HttpPost]
-        [Route("CrearTarea")]
-        public ActionResult<Usuario> CrearTarea(Tarea tarea)
-        {
-            repository.Create()
-            return Ok("El usuario fue creado con exito" + usuario);
-        }
-    */
 
     public IActionResult Index()
     {
         if (!string.IsNullOrEmpty(HttpContext.Session.GetString("usuario")) && (HttpContext.Session.GetString("rol")) == "Administrador")
         {
             var listaTareas = repository.GetAll();
-            var listaTareasViewModel = new ListarTareaViewModel();
-            var tareasViewModel = listaTareasViewModel.convertirLista(listaTareas);
-            return View(tareasViewModel);
+            var tareaslistaVM = new List<ListarTareaViewModel>();
+            foreach (Tarea T in listaTareas)
+            {
+                tareaslistaVM.Add(listartareaVM.convertirVM(T, UsuarioRepository.GetUsuario(T.IdUsuarioAsignado).NombreDeUsuario, TableroRepository.GetTablero(T.IdTablero).Nombre));
+            }
+
+            return View(tareaslistaVM);
+
         }
         else
         {
@@ -45,27 +49,37 @@ public class TareaController : Controller
     [HttpGet]
     public IActionResult CrearTarea(int id)
     {
-        return View(new CrearTareaViewModel());
+        return View(new CrearTareaViewModel(GetUsuarios(), GetTableros()));
     }
 
     [HttpPost]
-    public IActionResult CrearTarea(int id, CrearTareaViewModel tareaViewModel)
+    public IActionResult CrearTarea(CrearTareaViewModel tareaViewModel)
     {
         if (!ModelState.IsValid) return RedirectToAction("Index");
-        var tarea = new Tarea(tareaViewModel.Nombre, tareaViewModel.Descripcion, tareaViewModel.Color, tareaViewModel.Estado, tareaViewModel.IdUsuarioAsignado);
-        repository.Create(id, tarea);
+        var tarea = new Tarea(tareaViewModel.Nombre, tareaViewModel.Descripcion, tareaViewModel.Color, tareaViewModel.Estado, tareaViewModel.IdUsuarioAsignado, tareaViewModel.IdTablero);
+        repository.Create(tarea.IdTablero, tarea);
         return RedirectToAction("Index");
     }
-
 
     [HttpGet]
     public IActionResult TareasUsuario(int id)
     {
-        var listaTareas = repository.GetAll();
-        var listaTareasViewModel = new ListarTareaViewModel();
-        var tareasViewModel = listaTareasViewModel.convertirLista(listaTareas);
-        var listaTareasPorId = tareasViewModel.FindAll(T => T.IdUsuarioAsignado == id);
-        return View(listaTareasPorId);
+        if (!string.IsNullOrEmpty(HttpContext.Session.GetString("usuario")) && (HttpContext.Session.GetString("rol")) == "Administrador")
+        {
+            var listaTareasAll = repository.GetAll();
+            var listaTareas = listaTareasAll.FindAll(T => T.IdUsuarioAsignado == id);
+            var tareaslistaVM = new List<ListarTareaViewModel>();
+            foreach (Tarea T in listaTareas)
+            {
+                tareaslistaVM.Add(listartareaVM.convertirVM(T, UsuarioRepository.GetUsuario(T.IdUsuarioAsignado).NombreDeUsuario, TableroRepository.GetTablero(T.IdTablero).Nombre));
+            }
+            return View(tareaslistaVM);
+
+        }
+        else
+        {
+            return RedirectToRoute(new { controller = "Logueo", action = "Index" });
+        }
     }
 
     [HttpGet]
@@ -91,6 +105,21 @@ public class TareaController : Controller
         repository.Delete(id);
         return RedirectToAction("Index");
     }
+
+    private List<Usuario> GetUsuarios()
+    {
+        var listaUsuario = UsuarioRepository.GetAll();
+        return listaUsuario;
+
+    }
+
+    private List<Tablero> GetTableros()
+    {
+        var listaTablero = TableroRepository.GetAll();
+        return listaTablero;
+    }
+
+
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

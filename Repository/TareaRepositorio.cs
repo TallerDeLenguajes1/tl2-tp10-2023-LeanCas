@@ -1,12 +1,15 @@
-
-
-
+namespace TareaRepository;
 using System.Data.SqlClient;
 using System.Data.SQLite;
 
 public class TareaRepositorio : ITareaRepositorio
 {
-    private readonly string cadenaConexion = "Data Source=DB/kanban.db;Cache=Shared";
+    private readonly string cadenaConexion;
+
+    public TareaRepositorio(string CadenaDeConexion)
+    {
+        cadenaConexion = CadenaDeConexion;
+    }
     public void Asignar(int idUsuario, int idTarea)
     {
         try

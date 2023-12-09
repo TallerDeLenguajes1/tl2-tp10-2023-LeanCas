@@ -43,6 +43,10 @@ else
                     id="usu">
                 <span asp-validation-for="@Model.IdUsuarioAsignado" class="text-danger"></span>
 
+                <label for="tablero" class="form-label">Tablero Asignado</label>
+                <input asp-for="@Model.IdTablero" value="@Model.IdTablero" type="text" class="form-control" id="tablero">
+                <span asp-validation-for="@Model.IdTablero" class="text-danger"></span>
+
                 <input hidden asp-for="@Model.Id">
             </div>
             <button type="submit" class="btn btn-primary">Enviar</button>

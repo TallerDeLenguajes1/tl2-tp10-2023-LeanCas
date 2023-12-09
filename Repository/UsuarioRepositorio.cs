@@ -4,10 +4,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Data.SQLite;
 
-
+namespace UsuarioRepository;
 public class UsuarioRepositorio : IUsuarioRepositorio
 {
-    private readonly string cadenaConexion = "Data Source=DB/kanban.db;Cache=Shared";
+    private readonly string cadenaConexion;
+
+    public UsuarioRepositorio(string CadenaDeConexion)
+    {
+        cadenaConexion = CadenaDeConexion;
+    }
     public void Create(Usuario usuario)
     {
         try
@@ -117,7 +122,7 @@ public class UsuarioRepositorio : IUsuarioRepositorio
         }
     }
 
-    public Usuario GetUsuario(int id)
+    public Usuario GetUsuario(int? id)
     {
         try
         {

@@ -6,6 +6,8 @@ namespace tp10_tl2.Models;
 public class ModificarTareaViewModel
 {
     private int _id;
+
+    private int _idTablero;
     private string? _nombre;
 
     private string? _descripcion;
@@ -41,13 +43,14 @@ public class ModificarTareaViewModel
 
     [Required(ErrorMessage = "Este campo es requerido")]
     public Estado Estado { get => _estado; set => _estado = value; }
+    public int? IdUsuarioAsignado { get => _idUsuarioAsignado; set => _idUsuarioAsignado = value; }
 
     [Required(ErrorMessage = "Este campo es requerido")]
-    public int? IdUsuarioAsignado { get => _idUsuarioAsignado; set => _idUsuarioAsignado = value; }
+    public int IdTablero { get => _idTablero; set => _idTablero = value; }
 
     public Tarea convertirTarea(ModificarTareaViewModel tareaViewModel)
     {
-        var tarea = new Tarea(tareaViewModel.Nombre, tareaViewModel.Descripcion, tareaViewModel.Color, tareaViewModel.Estado, tareaViewModel.IdUsuarioAsignado);
+        var tarea = new Tarea(tareaViewModel.Nombre, tareaViewModel.Descripcion, tareaViewModel.Color, tareaViewModel.Estado, tareaViewModel.IdUsuarioAsignado, tareaViewModel.IdTablero);
         return tarea;
     }
 

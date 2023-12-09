@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using tp10_tl2.Models;
+using UsuarioRepository;
 
 namespace tp10_tl2.Controllers;
 
@@ -11,10 +12,10 @@ public class LogueoController : Controller
 
     private readonly IUsuarioRepositorio repository;
 
-    public LogueoController(ILogger<LogueoController> logger)
+    public LogueoController(ILogger<LogueoController> logger, IUsuarioRepositorio UsuarioRepository)
     {
         _logger = logger;
-        repository = new UsuarioRepositorio();
+        repository = UsuarioRepository;
     }
 
 

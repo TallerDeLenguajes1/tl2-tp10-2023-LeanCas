@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using tp10_tl2.Models;
+using TableroRepository;
 
 namespace tp10_tl2.Controllers;
 
@@ -11,10 +12,10 @@ public class TableroController : Controller
 
     private readonly ITableroRepositorio repository;
 
-    public TableroController(ILogger<TableroController> logger)
+    public TableroController(ILogger<TableroController> logger, ITableroRepositorio TableroRepository)
     {
         _logger = logger;
-        repository = new TableroRepositorio();
+        repository = TableroRepository;
     }
 
     public IActionResult Index()

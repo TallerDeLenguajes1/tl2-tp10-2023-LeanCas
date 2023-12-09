@@ -14,7 +14,17 @@ public class CrearTareaViewModel
     private Estado _estado;
 
     private int? _idUsuarioAsignado;
+    private int _idTablero;
+
+    private List<Usuario> listaUsuario = new List<Usuario>();
+    private List<Tablero> listaTablero = new List<Tablero>();
+
     public CrearTareaViewModel() { }
+    public CrearTareaViewModel(List<Usuario> usuarioList, List<Tablero> tableroList)
+    {
+        this.listaUsuario = usuarioList;
+        this.listaTablero = tableroList;
+    }
 
     public CrearTareaViewModel(Tarea tarea)
     {
@@ -23,6 +33,7 @@ public class CrearTareaViewModel
         _color = tarea.Color;
         Estado = tarea.Estado;
         _idUsuarioAsignado = tarea.IdUsuarioAsignado;
+        _idTablero = tarea.IdTablero;
     }
 
     [Required(ErrorMessage = "Este campo es requerido")]
@@ -37,6 +48,10 @@ public class CrearTareaViewModel
     [Required(ErrorMessage = "Este campo es requerido")]
     public Estado Estado { get => _estado; set => _estado = value; }
 
-    [Required(ErrorMessage = "Este campo es requerido")]
     public int? IdUsuarioAsignado { get => _idUsuarioAsignado; set => _idUsuarioAsignado = value; }
+
+    [Required(ErrorMessage = "Este campo es requerido")]
+    public int IdTablero { get => _idTablero; set => _idTablero = value; }
+    public List<Usuario> ListaUsuario { get => listaUsuario; set => listaUsuario = value; }
+    public List<Tablero> ListaTablero { get => listaTablero; set => listaTablero = value; }
 }

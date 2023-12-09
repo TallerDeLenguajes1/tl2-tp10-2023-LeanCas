@@ -56,3 +56,4 @@ C:\Users\Bruno Casavalle\Desktop\tp9\tp10-tl2\obj\Debug\net7.0\refint\tp10-tl2.d
 C:\Users\Bruno Casavalle\Desktop\tp9\tp10-tl2\obj\Debug\net7.0\tp10-tl2.pdb
 C:\Users\Bruno Casavalle\Desktop\tp9\tp10-tl2\obj\Debug\net7.0\tp10-tl2.genruntimeconfig.cache
 C:\Users\Bruno Casavalle\Desktop\tp9\tp10-tl2\obj\Debug\net7.0\ref\tp10-tl2.dll
+C:\Users\Bruno Casavalle\Desktop\tp9\tp10-tl2\bin\Debug\net7.0\DB\kanban.db

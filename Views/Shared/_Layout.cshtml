@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="utf-8" />
@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/tp10_tl2.styles.css" asp-append-version="true" />
+    <script src="https://kit.fontawesome.com/4e7276f25d.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -20,22 +21,22 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Logueo"
-                                asp-action="Index">Login</a>
+                    <ul class="navbar-nav flex-grow-1 p-1">
+                        <li class="nav-item d-flex column justify-content-center align-items-center p-2 hover-menu">
+
+                            <a class="nav-link" asp-area="" asp-controller="Logueo" asp-action="Index">Login</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Usuario"
-                                asp-action="Index">Usuarios</a>
+                        <li class="nav-item d-flex column justify-content-center align-items-center p-2 hover-menu">
+                            <i class="fa-solid fa-user"></i>
+                            <a class="nav-link" asp-area="" asp-controller="Usuario" asp-action="Index">Usuarios</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Tarea"
-                                asp-action="Index">Tareas</a>
+                        <li class="nav-item d-flex column justify-content-center align-items-center p-2 hover-menu">
+                            <i class="fa-solid fa-list-check"></i>
+                            <a class="nav-link" asp-area="" asp-controller="Tarea" asp-action="Index">Tareas</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Tablero"
-                                asp-action="Index">Tableros</a>
+                        <li class="nav-item d-flex column justify-content-center align-items-center p-2 hover-menu">
+                            <i class="fa-solid fa-bars-progress"></i>
+                            <a class="nav-link" asp-area="" asp-controller="Tablero" asp-action="Index">Tableros</a>
                         </li>
                     </ul>
                 </div>

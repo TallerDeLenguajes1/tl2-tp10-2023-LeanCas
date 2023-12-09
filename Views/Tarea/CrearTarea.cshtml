@@ -30,9 +30,25 @@
             </select>
 
             <label for="usu" class="form-label">Usuario Asignado</label>
-            <input asp-for="@Model.IdUsuarioAsignado" value="@Model.IdUsuarioAsignado" type="text" class="form-control"
-                id="usu">
+            <select asp-for="@Model.IdUsuarioAsignado" class="form-control" id="usu">
+                <option value="0" selected>Sin Asignar</option>
+                @foreach (var U in @Model.ListaUsuario)
+                {
+                    <option value="@U.Id">@U.NombreDeUsuario</option>
+                }
+            </select>
             <span asp-validation-for="@Model.IdUsuarioAsignado" class="text-danger"></span>
+
+
+            <label for="tablero" class="form-label">Tablero Asignado</label>
+            <select asp-for="@Model.IdTablero" class="form-control" id="tablero">
+                <option value="0" selected>Sin Asignar</option>
+                @foreach (var T in @Model.ListaTablero)
+                {
+                    <option value="@T.Id">@T.Nombre</option>
+                }
+            </select>
+            <span asp-validation-for="@Model.IdTablero" class="text-danger"></span>
         </div>
         <button type="submit" class="btn btn-primary">Enviar</button>
     </form>

@@ -1,11 +1,15 @@
 
-
-
+namespace TableroRepository;
 using System.Data.SQLite;
 
 public class TableroRepositorio : ITableroRepositorio
 {
-    private readonly string cadenaConexion = "Data Source=DB/kanban.db;Cache=Shared";
+    private readonly string cadenaConexion;
+
+    public TableroRepositorio(string CadenaDeConexion)
+    {
+        cadenaConexion = CadenaDeConexion;
+    }
     public void Create(Tablero tablero)
     {
         try
