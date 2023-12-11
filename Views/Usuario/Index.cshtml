@@ -1,5 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Usuario";
+    var sinAsignar = Context.Session.GetString("usuario");
 }
 @model List<tp10_tl2.Models.ListarUsuarioViewModel>;
 
@@ -8,31 +9,30 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th scope="col">ID</th>
                 <th scope="col">Nombre</th>
                 <th scope="col">Modificar</th>
                 <th scope="col">Eliminar</th>
-                <th scope="col">Tareas</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var u in Model)
             {
-                <tr>
-                    <th scope="row">@u.Id</th>
-                    <td>@u.Nombre</td>
-                    <td>
-                        <a class="actualizar" asp-controller="Usuario" asp-action="ModificarUsuario"
-                            asp-route-id="@u.Id">Modificar</a>
-                    </td>
-                    <td>
-                        <a class="eliminar" asp-controller="Usuario" asp-action="EliminarUsuario"
-                            asp-route-id="@u.Id">Eliminar</a>
-                    </td>
-                    <td scope="row">
-                        <a class="ver" asp-controller="Tarea" asp-action="tareasUsuario" asp-route-id="@u.Id">Ver</a>
-                    </td>
-                </tr>
+                @if (u.Nombre != "Sin Asignar" && u.Nombre != "admin")
+                {
+                    <tr>
+                        <td scope="row">@u.Nombre</td>
+                        <td>
+                            <i class="fa-solid fa-pen-to-square"></i>
+                            <a class="actualizar" asp-controller="Usuario" asp-action="ModificarUsuario"
+                                asp-route-id="@u.Id">Modificar</a>
+                        </td>
+                        <td>
+                            <i class="fa-solid fa-trash"></i>
+                            <a class="eliminar" asp-controller="Usuario" asp-action="EliminarUsuario"
+                                asp-route-id="@u.Id">Eliminar</a>
+                        </td>
+                    </tr>
+                }
             }
         </tbody>
     </table>

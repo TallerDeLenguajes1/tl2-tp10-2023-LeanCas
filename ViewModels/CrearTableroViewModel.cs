@@ -17,12 +17,10 @@ public class CrearTableroViewModel
     public CrearTableroViewModel(Tablero tablero)
     {
         _id = tablero.Id;
-        _idUsuarioPropietario = tablero.IdUsuarioPropietario;
         _nombre = tablero.Nombre;
         _descripcion = tablero.Descripcion;
     }
 
-    [Required(ErrorMessage = "Este campo es requerido")]
     public int IdUsuarioPropietario { get => _idUsuarioPropietario; set => _idUsuarioPropietario = value; }
 
     [Required(ErrorMessage = "Este campo es requerido")]

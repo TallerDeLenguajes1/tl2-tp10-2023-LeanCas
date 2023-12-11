@@ -6,7 +6,6 @@ namespace tp10_tl2.Models;
 public class ListarTareaViewModel
 {
     private int _id;
-
     private string? _Tablero;
     private string? _nombre;
 

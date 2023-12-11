@@ -40,7 +40,7 @@ body {
 }
 
 .actualizar:hover {
-  color: green;
+  color: #31c47f;
 }
 
 .ver:hover {
@@ -79,4 +79,12 @@ footer {
 
 .hover-menu:hover a {
   color: #f3f3f3 !important;
+}
+
+tr{
+  transition: all 0.5s ease-in-out;
+}
+
+tr:hover {
+  scale: 1.05;
 }

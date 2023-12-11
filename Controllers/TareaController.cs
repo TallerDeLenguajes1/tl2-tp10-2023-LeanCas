@@ -27,96 +27,199 @@ public class TareaController : Controller
 
     public IActionResult Index()
     {
-        if (!string.IsNullOrEmpty(HttpContext.Session.GetString("usuario")) && (HttpContext.Session.GetString("rol")) == "Administrador")
+        try
         {
-            var listaTareas = repository.GetAll();
-            var tareaslistaVM = new List<ListarTareaViewModel>();
-            foreach (Tarea T in listaTareas)
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("usuario")))
             {
-                tareaslistaVM.Add(listartareaVM.convertirVM(T, UsuarioRepository.GetUsuario(T.IdUsuarioAsignado).NombreDeUsuario, TableroRepository.GetTablero(T.IdTablero).Nombre));
+                var listaTareas = repository.GetAll();
+                var tareaslistaVM = new List<ListarTareaViewModel>();
+                foreach (Tarea T in listaTareas)
+                {
+                    tareaslistaVM.Add(listartareaVM.convertirVM(T, UsuarioRepository.GetUsuario(T.IdUsuarioAsignado).NombreDeUsuario, TableroRepository.GetTablero(T.IdTablero).Nombre));
+                }
+
+                return View(tareaslistaVM);
+
             }
-
-            return View(tareaslistaVM);
-
+            else
+            {
+                return RedirectToRoute(new { controller = "Logueo", action = "Index" });
+            }
         }
-        else
+        catch (Exception ex)
         {
-            return RedirectToRoute(new { controller = "Logueo", action = "Index" });
+            _logger.LogError(ex.ToString());
+            return RedirectToAction("Error");
         }
+
 
     }
 
     [HttpGet]
     public IActionResult CrearTarea(int id)
     {
-        return View(new CrearTareaViewModel(GetUsuarios(), GetTableros()));
+        try
+        {
+            return View(new CrearTareaViewModel(GetUsuarios(), GetTableros()));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return RedirectToAction("Error");
+        }
+
     }
 
     [HttpPost]
     public IActionResult CrearTarea(CrearTareaViewModel tareaViewModel)
     {
-        if (!ModelState.IsValid) return RedirectToAction("Index");
-        var tarea = new Tarea(tareaViewModel.Nombre, tareaViewModel.Descripcion, tareaViewModel.Color, tareaViewModel.Estado, tareaViewModel.IdUsuarioAsignado, tareaViewModel.IdTablero);
-        repository.Create(tarea.IdTablero, tarea);
-        return RedirectToAction("Index");
+        try
+        {
+            if (!ModelState.IsValid) return RedirectToAction("Index");
+            var tarea = new Tarea(tareaViewModel.Nombre, tareaViewModel.Descripcion, tareaViewModel.Color, tareaViewModel.Estado, tareaViewModel.IdUsuarioAsignado, tareaViewModel.IdTablero);
+            repository.Create(tarea.IdTablero, tarea);
+            return RedirectToAction("Index");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return RedirectToAction("Error");
+        }
+
     }
 
     [HttpGet]
     public IActionResult TareasUsuario(int id)
     {
-        if (!string.IsNullOrEmpty(HttpContext.Session.GetString("usuario")) && (HttpContext.Session.GetString("rol")) == "Administrador")
+        try
         {
-            var listaTareasAll = repository.GetAll();
-            var listaTareas = listaTareasAll.FindAll(T => T.IdUsuarioAsignado == id);
-            var tareaslistaVM = new List<ListarTareaViewModel>();
-            foreach (Tarea T in listaTareas)
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("usuario")))
             {
-                tareaslistaVM.Add(listartareaVM.convertirVM(T, UsuarioRepository.GetUsuario(T.IdUsuarioAsignado).NombreDeUsuario, TableroRepository.GetTablero(T.IdTablero).Nombre));
-            }
-            return View(tareaslistaVM);
+                var listaTareasAll = repository.GetAll();
+                var listaTareas = listaTareasAll.FindAll(T => T.IdUsuarioAsignado == id);
+                var tareaslistaVM = new List<ListarTareaViewModel>();
+                foreach (Tarea T in listaTareas)
+                {
+                    tareaslistaVM.Add(listartareaVM.convertirVM(T, UsuarioRepository.GetUsuario(T.IdUsuarioAsignado).NombreDeUsuario, TableroRepository.GetTablero(T.IdTablero).Nombre));
+                }
+                return View(tareaslistaVM);
 
+            }
+            else
+            {
+                return RedirectToRoute(new { controller = "Logueo", action = "Index" });
+            }
         }
-        else
+        catch (Exception ex)
         {
-            return RedirectToRoute(new { controller = "Logueo", action = "Index" });
+            _logger.LogError(ex.ToString());
+            return RedirectToAction("Error");
         }
+
     }
 
     [HttpGet]
     public IActionResult ModificarTarea(int id)
     {
-        var tarea = repository.GetTarea(id);
-        var tareaViewModel = new ModificarTareaViewModel(tarea, GetUsuarios(), GetTableros());
-        return View(tareaViewModel);
+        try
+        {
+            var tarea = repository.GetTarea(id);
+            var tareaViewModel = new ModificarTareaViewModel(tarea, GetUsuarios(), GetTableros());
+            return View(tareaViewModel);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return RedirectToAction("Error");
+        }
+
     }
 
     [HttpPost]
     public IActionResult ModificarTarea(int id, ModificarTareaViewModel tareaViewModel)
     {
-        if (!ModelState.IsValid) return RedirectToAction("Index");
-        var viewModel = new ModificarTareaViewModel();
-        var tarea = viewModel.convertirTarea(tareaViewModel);
-        repository.Set(id, tarea);
-        return RedirectToAction("Index");
+        try
+        {
+            if (!ModelState.IsValid) return RedirectToAction("Index");
+            var viewModel = new ModificarTareaViewModel();
+            var tarea = viewModel.convertirTarea(tareaViewModel);
+            repository.Set(id, tarea);
+            return RedirectToAction("Index");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return RedirectToAction("Error");
+        }
+
     }
 
     public IActionResult EliminarTarea(int id)
     {
-        repository.Delete(id);
-        return RedirectToAction("Index");
+        try
+        {
+            repository.Delete(id);
+            return RedirectToAction("Index");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return RedirectToAction("Error");
+        }
+
+    }
+
+    public IActionResult TareaPorTablero(int id)
+    {
+        try
+        {
+            var tareas = repository.GetAll();
+            var tareasListVM = new List<ListarTareaViewModel>();
+            foreach (Tarea T in tareas)
+            {
+                if (T.IdTablero == id)
+                {
+                    var tareaVM = new ListarTareaViewModel(T, UsuarioRepository.GetUsuario(T.IdUsuarioAsignado).NombreDeUsuario, TableroRepository.GetTablero(T.IdTablero).Nombre);
+                    tareasListVM.Add(tareaVM);
+                }
+            }
+            return View(tareasListVM);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return RedirectToAction("Error");
+        }
+
     }
 
     private List<Usuario> GetUsuarios()
     {
-        var listaUsuario = UsuarioRepository.GetAll();
-        return listaUsuario;
+        try
+        {
+            var listaUsuario = UsuarioRepository.GetAll();
+            return listaUsuario;
+        }
+        catch
+        {
+            throw;
+        }
+
 
     }
 
     private List<Tablero> GetTableros()
     {
-        var listaTablero = TableroRepository.GetAll();
-        return listaTablero;
+        try
+        {
+            var listaTablero = TableroRepository.GetAll();
+            return listaTablero;
+        }
+        catch
+        {
+            throw;
+        }
+
     }
 
 

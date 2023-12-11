@@ -1,17 +1,15 @@
+@model tp10_tl2.Models.CrearTableroViewModel
 @{
-    ViewData["Title"] = "CrearUsuario";
+    ViewData["Title"] = "Crear Tablero";
+    Model.IdUsuarioPropietario = Convert.ToInt32(Context.Session.GetString("id"));
 }
 
-@model tp10_tl2.Models.CrearTableroViewModel
+
 
 <div class="text-center">
-    <h1 class="display-4">Crear Tablero</h1>
+    <h1 class="display-4">Crear Tablero @Model.IdUsuarioPropietario</h1>
     <form asp-controller="Tablero" asp-action="CrearTablero" method="post">
         <div class="mb-3">
-            <label for="id-u" class="form-label">ID Usuario Asignado</label>
-            <input asp-for="@Model.IdUsuarioPropietario" type="text" class="form-control" id="id-u">
-            <span asp-validation-for="@Model.IdUsuarioPropietario" class="text-danger"></span>
-
             <label for="nombre" class="form-label">Nombre</label>
             <input asp-for="@Model.Nombre" type="text" class="form-control" id="nombre">
             <span asp-validation-for="@Model.Nombre" class="text-danger"></span>

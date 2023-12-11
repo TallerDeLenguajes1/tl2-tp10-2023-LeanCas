@@ -21,28 +21,48 @@ public class LogueoController : Controller
 
     public IActionResult Index()
     {
-        return View();
+        try
+        {
+            return View();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return RedirectToAction("Error");
+        }
     }
 
     [HttpPost]
     public IActionResult LogueoVerificar(LogueoViewModel login)
     {
-        var usuarioVerificar = repository.VerificarUsuario(login.NombreUsuario, login.Password);
-        if (string.IsNullOrEmpty(usuarioVerificar.NombreDeUsuario))
+        try
         {
-            return RedirectToAction("Index");
-        }
-        else
-        {
-            Loguear(usuarioVerificar);
-            if (HttpContext.Session.GetString("rol") == Rol.Administrador.ToString())
+            if (!ModelState.IsValid) return RedirectToAction("Index");
+
+            var usuarioVerificar = repository.VerificarUsuario(login.NombreUsuario, login.Password);
+            if (string.IsNullOrEmpty(usuarioVerificar.NombreDeUsuario))
             {
-                return RedirectToRoute(new { controller = "Usuario", action = "Index" });
+                _logger.LogWarning("Intento de acceso invalido de Usuario : " + login.NombreUsuario + " Contraseña : " + login.Password);
+                return RedirectToAction("Index");
             }
             else
             {
-                return RedirectToRoute(new { controller = "Tablero", action = "Index" });
+                Loguear(usuarioVerificar);
+                _logger.LogInformation("Ingreso correctamente " + login.NombreUsuario);
+                if (HttpContext.Session.GetString("rol") == Rol.Administrador.ToString())
+                {
+                    return RedirectToRoute(new { controller = "Usuario", action = "Index" });
+                }
+                else
+                {
+                    return RedirectToRoute(new { controller = "Tablero", action = "Index" });
+                }
             }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return RedirectToAction("Error");
         }
     }
 

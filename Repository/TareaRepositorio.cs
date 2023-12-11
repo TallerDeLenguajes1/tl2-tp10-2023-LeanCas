@@ -107,6 +107,7 @@ public class TareaRepositorio : ITareaRepositorio
                         {
                             tarea.Estado = estadoEnum;
                         }
+                        tarea.IdTablero = Convert.ToInt32(reader["id_tablero"]);
                         tarea.Descripcion = reader["descripcion"].ToString();
                         tarea.Color = reader["color"].ToString();
                         tarea.IdUsuarioAsignado = Convert.ToInt32(reader["id_usuario_asignado"]);
@@ -202,6 +203,7 @@ public class TareaRepositorio : ITareaRepositorio
 
                 connection.Close();
             }
+
             return tareas;
         }
         catch

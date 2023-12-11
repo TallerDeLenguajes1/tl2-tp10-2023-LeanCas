@@ -1,6 +1,8 @@
 ﻿@{
-    ViewData["Title"] = "Tablero";
+    ViewData["Title"] = "Tableros";
+    var user = Context.Session.GetString("rol");
 }
+
 @model List<tp10_tl2.Models.ListarTableroViewModel>
 
 <div class="text-center">
@@ -8,31 +10,41 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th scope="col">ID</th>
                 <th scope="col">Usuario Propietario</th>
-                <th scope="col">Nombre</th>
+                <th scope="col">Nombre Tablero</th>
                 <th scope="col">Descripcion</th>
-                <th scope="col">Modificar</th>
-                <th scope="col">Eliminar</th>
+                @if (user == "Administrador")
+                {
+                    <th scope="col">Modificar</th>
+                    <th scope="col">Eliminar</th>
+                }
+                <th>Tareas</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var u in Model)
             {
                 <tr>
-                    <th scope="row">@u.Id</th>
-                    <td>@u.IdUsuarioPropietario</td>
+                    <td>@u.UsuarioAsignado</td>
                     <td>@u.Nombre</td>
                     <td>@u.Descripcion</td>
+                    @if (user == "Administrador")
+                    {
+                        <td>
+                            <a class="actualizar" asp-controller="Tablero" asp-action="ModificarTablero"
+                                asp-route-id="@u.Id">Modificar</a>
+                        </td>
+                        <td>
+                            <a class="eliminar" asp-controller="Tablero" asp-action="EliminarTablero"
+                                asp-route-id="@u.Id">Eliminar</a>
+                        </td>
+                    }
                     <td>
-                        <a class="actualizar" asp-controller="Tablero" asp-action="ModificarTablero"
-                            asp-route-id="@u.Id">Modificar</a>
-                    </td>
-                    <td>
-                        <a class="eliminar" asp-controller="Tablero" asp-action="EliminarTablero"
-                            asp-route-id="@u.Id">Eliminar</a>
+                        <i class="fa-solid fa-clipboard"></i>
+                        <a asp-controller="Tarea" asp-action="TareaPorTablero" asp-route-id="@u.Id"> Ver Tareas</a>
                     </td>
                 </tr>
+
             }
         </tbody>
     </table>

@@ -20,58 +20,111 @@ public class UsuarioController : Controller
 
     public IActionResult Index()
     {
+        try
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("usuario")) && (HttpContext.Session.GetString("rol")) == "Administrador")
+            {
+                var usuarios = repository.GetAll();
+                var listarUsuarioViewModel = new ListarUsuarioViewModel();
+                var usuariosViewModel = listarUsuarioViewModel.convertirLista(usuarios);
+                return View(usuariosViewModel);
+            }
+            else
+            {
+                return RedirectToRoute(new { controller = "Logueo", action = "Index" });
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return RedirectToAction("Error");
+        }
 
-        if (!string.IsNullOrEmpty(HttpContext.Session.GetString("usuario")) && (HttpContext.Session.GetString("rol")) == "Administrador")
-        {
-            var usuarios = repository.GetAll();
-            var listarUsuarioViewModel = new ListarUsuarioViewModel();
-            var usuariosViewModel = listarUsuarioViewModel.convertirLista(usuarios);
-            return View(usuariosViewModel);
-        }
-        else
-        {
-            return RedirectToRoute(new { controller = "Logueo", action = "Index" });
-        }
     }
 
     [HttpGet]
     public IActionResult CrearUsuario()
     {
-        return View(new CrearUsuarioViewModel());
+        try
+        {
+            return View(new CrearUsuarioViewModel());
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return RedirectToAction("Error");
+        }
+
     }
 
     [HttpPost]
     public IActionResult CrearUsuario(CrearUsuarioViewModel usuarioViewModel)
     {
-        if (!ModelState.IsValid) return RedirectToAction("Index");
-        var usuario = new Usuario(usuarioViewModel.Nombre);
-        repository.Create(usuario);
-        return RedirectToAction("Index");
+        try
+        {
+            if (!ModelState.IsValid) return RedirectToAction("Index");
+            var usuario = new Usuario(usuarioViewModel.Nombre);
+            repository.Create(usuario);
+            return RedirectToAction("Index");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return RedirectToAction("Error");
+        }
+
     }
 
 
     [HttpGet]
     public IActionResult ModificarUsuario(int id)
     {
-        var usuario = repository.GetUsuario(id);
-        var usuarioViewModel = new ModificarUsuarioViewModel(usuario);
-        return View(usuarioViewModel);
+        try
+        {
+            var usuario = repository.GetUsuario(id);
+            var usuarioViewModel = new ModificarUsuarioViewModel(usuario);
+            return View(usuarioViewModel);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return RedirectToAction("Error");
+        }
+
     }
 
     [HttpPost]
     public IActionResult ModificarUsuario(int id, ModificarUsuarioViewModel usuarioViewModel)
     {
-        if (!ModelState.IsValid) return RedirectToAction("Index");
-        var viewModel = new ModificarUsuarioViewModel();
-        var usuario = viewModel.convertirUsuario(usuarioViewModel);
-        repository.Set(id, usuario);
-        return RedirectToAction("Index");
+        try
+        {
+            if (!ModelState.IsValid) return RedirectToAction("Index");
+            var viewModel = new ModificarUsuarioViewModel();
+            var usuario = viewModel.convertirUsuario(usuarioViewModel);
+            repository.Set(id, usuario);
+            return RedirectToAction("Index");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return RedirectToAction("Error");
+        }
+
     }
 
     public IActionResult EliminarUsuario(int id)
     {
-        repository.Delete(id);
-        return RedirectToAction("Index");
+        try
+        {
+            repository.Delete(id);
+            return RedirectToAction("Index");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return RedirectToAction("Error");
+        }
+
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
