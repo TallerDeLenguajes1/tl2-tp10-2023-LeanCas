@@ -1,1 +1,3 @@
-# tl2-tp10-2023-LeanCas
+# Gestor de Tareas
+Usuario: Admin
+Contraseña: 1234
