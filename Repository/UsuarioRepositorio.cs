@@ -23,8 +23,10 @@ public class UsuarioRepositorio : IUsuarioRepositorio
                 connection.Open();
                 var command = new SQLiteCommand(queryString, connection);
 
+                string RolString = usuario.Rol.ToString();
+
                 command.Parameters.Add(new SQLiteParameter("@nombre_de_usuario", usuario.NombreDeUsuario));
-                command.Parameters.Add(new SQLiteParameter("@rol", usuario.Rol));
+                command.Parameters.Add(new SQLiteParameter("@rol", RolString));
                 command.Parameters.Add(new SQLiteParameter("@password", usuario.Password));
                 command.ExecuteNonQuery();
 

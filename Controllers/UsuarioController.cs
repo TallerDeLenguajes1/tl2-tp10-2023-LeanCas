@@ -63,7 +63,7 @@ public class UsuarioController : Controller
         try
         {
             if (!ModelState.IsValid) return RedirectToAction("Index");
-            var usuario = new Usuario(usuarioViewModel.Nombre);
+            var usuario = new Usuario(usuarioViewModel.Nombre, usuarioViewModel.Password);
             repository.Create(usuario);
             return RedirectToAction("Index");
         }

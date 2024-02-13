@@ -23,8 +23,15 @@ public class Usuario
     public Rol? Rol { get => _rol; set => _rol = value; }
 
     public Usuario() { }
+
     public Usuario(string? Nombre)
     {
-        this.NombreDeUsuario = Nombre;
+        this._nombreDeUsuario = Nombre;
+    }
+    public Usuario(string? Nombre, string? Password)
+    {
+        this._nombreDeUsuario = Nombre;
+        this._password = Password;
+        this._rol = global::Rol.Operador;
     }
 }
