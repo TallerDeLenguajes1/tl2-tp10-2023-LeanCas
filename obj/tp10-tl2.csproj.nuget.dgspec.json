@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Bruno Casavalle\\Desktop\\tp9\\tp10-tl2\\tp10-tl2.csproj": {}
+    "C:\\Users\\Bruno Casavalle\\Desktop\\tp9\\Proyecto\\tl2-tp10-2023-LeanCas\\tp10-tl2.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Bruno Casavalle\\Desktop\\tp9\\tp10-tl2\\tp10-tl2.csproj": {
+    "C:\\Users\\Bruno Casavalle\\Desktop\\tp9\\Proyecto\\tl2-tp10-2023-LeanCas\\tp10-tl2.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Bruno Casavalle\\Desktop\\tp9\\tp10-tl2\\tp10-tl2.csproj",
+        "projectUniqueName": "C:\\Users\\Bruno Casavalle\\Desktop\\tp9\\Proyecto\\tl2-tp10-2023-LeanCas\\tp10-tl2.csproj",
         "projectName": "tp10-tl2",
-        "projectPath": "C:\\Users\\Bruno Casavalle\\Desktop\\tp9\\tp10-tl2\\tp10-tl2.csproj",
+        "projectPath": "C:\\Users\\Bruno Casavalle\\Desktop\\tp9\\Proyecto\\tl2-tp10-2023-LeanCas\\tp10-tl2.csproj",
         "packagesPath": "C:\\Users\\Bruno Casavalle\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Bruno Casavalle\\Desktop\\tp9\\tp10-tl2\\obj\\",
+        "outputPath": "C:\\Users\\Bruno Casavalle\\Desktop\\tp9\\Proyecto\\tl2-tp10-2023-LeanCas\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Bruno Casavalle\\AppData\\Roaming\\NuGet\\NuGet.Config",

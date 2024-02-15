@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "O6RFrx4fmJPNaUPeIBX7oQ06g9OOnra5XEvuR0UwewbEozI/iUmTgtRI+5ISteXjXW7L47mo7NHf9Qtqgi7cVQ==",
+  "dgSpecHash": "SzZe7CCq36oPAAnouAOgc3HuDZUmywmNk1zvMmb6S691apzL3K+fNtkg0o2cfQIZFtv0FhhDL1WB6Ifk9Xvu2Q==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Bruno Casavalle\\Desktop\\tp9\\tp10-tl2\\tp10-tl2.csproj",
+  "projectFilePath": "C:\\Users\\Bruno Casavalle\\Desktop\\tp9\\Proyecto\\tl2-tp10-2023-LeanCas\\tp10-tl2.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Bruno Casavalle\\.nuget\\packages\\entityframework\\6.4.4\\entityframework.6.4.4.nupkg.sha512",
     "C:\\Users\\Bruno Casavalle\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\2.2.0\\microsoft.aspnetcore.cryptography.internal.2.2.0.nupkg.sha512",
