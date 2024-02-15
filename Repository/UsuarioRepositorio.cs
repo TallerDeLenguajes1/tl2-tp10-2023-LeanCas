@@ -158,7 +158,8 @@ public class UsuarioRepositorio : IUsuarioRepositorio
                 connection.Close();
             }
             var usuarioBuscado = users.FirstOrDefault(U => U.Id == id);
-            return usuarioBuscado;
+
+            return usuarioBuscado ?? new Usuario { NombreDeUsuario = "Sin asignar" };
         }
         catch
         {

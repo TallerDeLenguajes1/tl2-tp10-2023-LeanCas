@@ -121,6 +121,10 @@ public class TableroRepositorio : ITableroRepositorio
 
                 connection.Close();
             }
+            if (tablero.Nombre == null)
+            {
+                tablero.Nombre = "Sin asignar";
+            }
             return tablero;
         }
         catch

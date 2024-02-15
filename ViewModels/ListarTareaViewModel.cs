@@ -18,7 +18,7 @@ public class ListarTareaViewModel
     private string? _usuarioAsignado;
     public ListarTareaViewModel() { }
 
-    public ListarTareaViewModel(Tarea tarea, string? usuario, string? tablero)
+    public ListarTareaViewModel(Tarea tarea, string? usuario = "Sin asignar", string? tablero = "Sin asignar")
     {
         _id = tarea.Id;
         _nombre = tarea.Nombre;

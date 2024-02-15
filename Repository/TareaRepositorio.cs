@@ -216,7 +216,7 @@ public class TareaRepositorio : ITareaRepositorio
     {
         try
         {
-            var queryString = @"UPDATE Tarea SET (id,nombre,estado,descripcion,color,id_usuario_asignado) = (@id, @nombre, @estado, @descripcion, @color, @id_u_asignado) WHERE id = @id_buscar;";
+            var queryString = @"UPDATE Tarea SET (id,nombre,estado,descripcion,color,id_usuario_asignado, id_tablero) = (@id, @nombre, @estado, @descripcion, @color, @id_u_asignado, @id_tablero) WHERE id = @id_buscar;";
             using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
             {
                 connection.Open();
@@ -229,6 +229,7 @@ public class TareaRepositorio : ITareaRepositorio
                 command.Parameters.Add(new SQLiteParameter("@descripcion", tarea.Descripcion));
                 command.Parameters.Add(new SQLiteParameter("@color", tarea.Color));
                 command.Parameters.Add(new SQLiteParameter("@id_u_asignado", tarea.IdUsuarioAsignado));
+                command.Parameters.Add(new SQLiteParameter("@id_tablero", tarea.IdTablero));
 
                 command.ExecuteNonQuery();
                 connection.Close();
