@@ -12,14 +12,22 @@ public class ModificarTableroViewModel
 
     private string? _descripcion;
 
+    private List<Usuario> listaUsuario = new List<Usuario>();
+
     public ModificarTableroViewModel() { }
 
-    public ModificarTableroViewModel(Tablero tablero)
+    public ModificarTableroViewModel(List<Usuario> usuarioList)
+    {
+        this.ListaUsuario = usuarioList;
+    }
+
+    public ModificarTableroViewModel(Tablero tablero, List<Usuario> usuarioList)
     {
         _id = tablero.Id;
         _idUsuarioPropietario = tablero.IdUsuarioPropietario;
         _nombre = tablero.Nombre;
         _descripcion = tablero.Descripcion;
+        this.ListaUsuario = usuarioList;
     }
 
     [Required(ErrorMessage = "Este campo es requerido")]
@@ -33,6 +41,7 @@ public class ModificarTableroViewModel
 
     [Required(ErrorMessage = "Este campo es requerido")]
     public int Id { get => _id; set => _id = value; }
+    public List<Usuario> ListaUsuario { get => listaUsuario; set => listaUsuario = value; }
 
     public Tablero convertirTablero(ModificarTableroViewModel tableroViewModel)
     {

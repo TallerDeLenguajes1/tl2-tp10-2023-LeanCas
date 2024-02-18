@@ -98,7 +98,7 @@ public class TableroController : Controller
         try
         {
             var tablero = repository.GetTablero(id);
-            var tableroViewModel = new ModificarTableroViewModel(tablero);
+            var tableroViewModel = new ModificarTableroViewModel(tablero, GetUsuarios());
             return View(tableroViewModel);
         }
         catch (Exception ex)
@@ -110,14 +110,14 @@ public class TableroController : Controller
     }
 
     [HttpPost]
-    public IActionResult ModificarTablero(int id, ModificarTableroViewModel tableroViewModel)
+    public IActionResult ModificarTablero(ModificarTableroViewModel tableroViewModel)
     {
         try
         {
             if (!ModelState.IsValid) return RedirectToAction("Index");
             var viewModel = new ModificarTableroViewModel();
             var tablero = viewModel.convertirTablero(tableroViewModel);
-            repository.Set(id, tablero);
+            repository.Set(tableroViewModel.Id, tablero);
             return RedirectToAction("Index");
         }
         catch (Exception ex)
@@ -140,6 +140,21 @@ public class TableroController : Controller
             _logger.LogError(ex.ToString());
             return RedirectToAction("Error");
         }
+    }
+
+    private List<Usuario> GetUsuarios()
+    {
+        try
+        {
+            var listaUsuario = usuarioRepositorio.GetAll();
+            return listaUsuario;
+        }
+        catch
+        {
+            throw;
+        }
+
+
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

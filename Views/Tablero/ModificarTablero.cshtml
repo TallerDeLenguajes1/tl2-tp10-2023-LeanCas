@@ -13,9 +13,13 @@ else
         <h1 class="display-4">Modificar Tablero</h1>
         <form asp-controller="Tablero" asp-action="ModificarTablero" method="post">
             <div class="mb-3">
-                <label for="id-u" class="form-label">ID Usuario Asignado</label>
-                <input asp-for="@Model.IdUsuarioPropietario" type="text" class="form-control" id="id-u">
-                <span asp-validation-for="@Model.IdUsuarioPropietario" class="text-danger"></span>
+                <label for="usu" class="form-label">Usuario Asignado</label>
+                <select asp-for="@Model.IdUsuarioPropietario" class="form-control" id="usu">
+                    @foreach (var U in @Model.ListaUsuario)
+                    {
+                        <option value="@U.Id">@U.NombreDeUsuario</option>
+                    }
+                </select>
 
                 <label for="nombre" class="form-label">Nombre</label>
                 <input asp-for="@Model.Nombre" type="text" class="form-control" id="nombre">

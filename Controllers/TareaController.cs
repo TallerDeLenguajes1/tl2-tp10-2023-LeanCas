@@ -136,14 +136,14 @@ public class TareaController : Controller
     }
 
     [HttpPost]
-    public IActionResult ModificarTarea(int id, ModificarTareaViewModel tareaViewModel)
+    public IActionResult ModificarTarea(ModificarTareaViewModel tareaViewModel)
     {
         try
         {
             if (!ModelState.IsValid) return RedirectToAction("Index");
             var viewModel = new ModificarTareaViewModel();
             var tarea = viewModel.convertirTarea(tareaViewModel);
-            repository.Set(id, tarea);
+            repository.Set(tareaViewModel.Id, tarea);
             return RedirectToAction("Index");
         }
         catch (Exception ex)

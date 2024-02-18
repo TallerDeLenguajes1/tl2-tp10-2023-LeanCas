@@ -86,7 +86,7 @@ public class TareaRepositorio : ITareaRepositorio
     {
         try
         {
-            var queryString = @"SELECT * FROM Tarea;";
+            var queryString = @"SELECT * FROM Tarea ORDER BY id_usuario_asignado;";
             List<Tarea> tareas = new List<Tarea>();
             using (var connection = new SQLiteConnection(cadenaConexion))
             {
@@ -216,14 +216,13 @@ public class TareaRepositorio : ITareaRepositorio
     {
         try
         {
-            var queryString = @"UPDATE Tarea SET (id,nombre,estado,descripcion,color,id_usuario_asignado, id_tablero) = (@id, @nombre, @estado, @descripcion, @color, @id_u_asignado, @id_tablero) WHERE id = @id_buscar;";
+            var queryString = @"UPDATE Tarea SET (nombre,estado,descripcion,color,id_usuario_asignado, id_tablero) = (@nombre, @estado, @descripcion, @color, @id_u_asignado, @id_tablero) WHERE id = @id_buscar;";
             using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
             {
                 connection.Open();
 
                 var command = new SQLiteCommand(queryString, connection);
                 command.Parameters.Add(new SQLiteParameter("@id_buscar", id));
-                command.Parameters.Add(new SQLiteParameter("@id", tarea.Id));
                 command.Parameters.Add(new SQLiteParameter("@nombre", tarea.Nombre));
                 command.Parameters.Add(new SQLiteParameter("@estado", tarea.Estado));
                 command.Parameters.Add(new SQLiteParameter("@descripcion", tarea.Descripcion));

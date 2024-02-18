@@ -175,14 +175,13 @@ public class TableroRepositorio : ITableroRepositorio
     {
         try
         {
-            var queryString = @"UPDATE Tablero SET (id,id_usuario_propietario,nombre,descripcion) = (@id, @id_u_propietario, @nombre, @descripcion) WHERE id = @id_buscar;";
+            var queryString = @"UPDATE Tablero SET (id_usuario_propietario,nombre,descripcion) = (@id_u_propietario, @nombre, @descripcion) WHERE id = @id_buscar;";
             using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
             {
                 connection.Open();
 
                 var command = new SQLiteCommand(queryString, connection);
                 command.Parameters.Add(new SQLiteParameter("@id_buscar", id));
-                command.Parameters.Add(new SQLiteParameter("@id", tablero.Id));
                 command.Parameters.Add(new SQLiteParameter("@id_u_propietario", tablero.IdUsuarioPropietario));
                 command.Parameters.Add(new SQLiteParameter("@nombre", tablero.Nombre));
                 command.Parameters.Add(new SQLiteParameter("@descripcion", tablero.Descripcion));

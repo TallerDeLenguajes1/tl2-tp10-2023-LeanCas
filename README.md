@@ -18,6 +18,7 @@ El proyecto trata sobre un gestor de tareas, el cual es una herramienta integral
 4. Autenticacion de usuarios
 5. Manejo de errores
 6. Control de viewModels
+7. Asignacion de tareas entre usuarios
 
 # Descripcion de Proyecto
 

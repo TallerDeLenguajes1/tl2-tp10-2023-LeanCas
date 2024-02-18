@@ -94,14 +94,14 @@ public class UsuarioController : Controller
     }
 
     [HttpPost]
-    public IActionResult ModificarUsuario(int id, ModificarUsuarioViewModel usuarioViewModel)
+    public IActionResult ModificarUsuario(ModificarUsuarioViewModel usuarioViewModel)
     {
         try
         {
             if (!ModelState.IsValid) return RedirectToAction("Index");
             var viewModel = new ModificarUsuarioViewModel();
             var usuario = viewModel.convertirUsuario(usuarioViewModel);
-            repository.Set(id, usuario);
+            repository.Set(usuarioViewModel.Id, usuario);
             return RedirectToAction("Index");
         }
         catch (Exception ex)
