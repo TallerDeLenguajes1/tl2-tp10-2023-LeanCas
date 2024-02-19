@@ -31,10 +31,12 @@
                     @if (user == "Administrador")
                     {
                         <td>
+                            <i class="fa-solid fa-pen-to-square"></i>
                             <a class="actualizar" asp-controller="Tablero" asp-action="ModificarTablero"
                                 asp-route-id="@u.Id">Modificar</a>
                         </td>
                         <td>
+                            <i class="fa-solid fa-trash"></i>
                             <a class="eliminar" asp-controller="Tablero" asp-action="EliminarTablero"
                                 asp-route-id="@u.Id">Eliminar</a>
                         </td>
