@@ -30,23 +30,17 @@
                 <tr>
                     <td>@T.Nombre</td>
                     <td>@T.Descripcion</td>
-                    <td style="text-align: center;">
-                        <div
-                            style="background-color: @T.Color; width: 40px; height: 40px; border-radius: 50%; display: inline-block; vertical-align: middle;">
-                        </div>
-                    </td>
+                    <td>@T.Color</td>
                     <td>@T.Estado</td>
                     <td>@T.UsuarioAsignado</td>
                     <td>@T.Tablero</td>
                     @if (user == "Administrador")
                     {
                         <td>
-                            <i class="fa-solid fa-pen-to-square"></i>
                             <a class="actualizar" asp-controller="Tarea" asp-action="ModificarTarea"
                                 asp-route-id="@T.Id">Modificar</a>
                         </td>
                         <td>
-                            <i class="fa-solid fa-trash"></i>
                             <a class="eliminar" asp-controller="Tarea" asp-action="EliminarTarea"
                                 asp-route-id="@T.Id">Eliminar</a>
                         </td>

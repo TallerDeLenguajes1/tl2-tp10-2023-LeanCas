@@ -63,6 +63,11 @@ public class UsuarioController : Controller
         try
         {
             if (!ModelState.IsValid) return RedirectToAction("Index");
+            if (UsuarioExiste(usuarioViewModel.Nombre))
+            {
+                ModelState.AddModelError(nameof(usuarioViewModel.Nombre), "El Nombre de Usuario ya está en uso.");
+                return View(usuarioViewModel);
+            }
             var usuario = new Usuario(usuarioViewModel.Nombre, usuarioViewModel.Password);
             repository.Create(usuario);
             return RedirectToAction("Index");
@@ -70,7 +75,7 @@ public class UsuarioController : Controller
         catch (Exception ex)
         {
             _logger.LogError(ex.ToString());
-            return RedirectToAction("Error");
+            return RedirectToAction("CrearUsuario", usuarioViewModel);
         }
 
     }
@@ -99,6 +104,11 @@ public class UsuarioController : Controller
         try
         {
             if (!ModelState.IsValid) return RedirectToAction("Index");
+            if (UsuarioExiste(usuarioViewModel.Nombre))
+            {
+                ModelState.AddModelError(nameof(usuarioViewModel.Nombre), "El Nombre de Usuario ya está en uso.");
+                return View(usuarioViewModel);
+            }
             var viewModel = new ModificarUsuarioViewModel();
             var usuario = viewModel.convertirUsuario(usuarioViewModel);
             repository.Set(usuarioViewModel.Id, usuario);
@@ -125,6 +135,19 @@ public class UsuarioController : Controller
             return RedirectToAction("Error");
         }
 
+    }
+
+    private bool UsuarioExiste(string? nombre)
+    {
+        var lista = repository.GetAll();
+        foreach (var u in lista)
+        {
+            if (u.NombreDeUsuario == nombre)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
