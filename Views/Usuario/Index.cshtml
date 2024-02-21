@@ -17,7 +17,7 @@
         <tbody>
             @foreach (var u in Model)
             {
-                @if (u.Nombre != "Sin Asignar" && u.Nombre != "admin")
+                @if (u.Nombre != "Sin Asignar")
                 {
                     <tr>
                         <td scope="row">@u.Nombre</td>
@@ -26,11 +26,14 @@
                             <a class="actualizar" asp-controller="Usuario" asp-action="ModificarUsuario"
                                 asp-route-id="@u.Id">Modificar</a>
                         </td>
-                        <td>
-                            <i class="fa-solid fa-trash"></i>
-                            <a class="eliminar" asp-controller="Usuario" asp-action="EliminarUsuario"
-                                asp-route-id="@u.Id">Eliminar</a>
-                        </td>
+                        @if (u.Nombre != "admin")
+                        {
+                            <td>
+                                <i class="fa-solid fa-trash"></i>
+                                <a class="eliminar" asp-controller="Usuario" asp-action="EliminarUsuario"
+                                    asp-route-id="@u.Id">Eliminar</a>
+                            </td>
+                        }
                     </tr>
                 }
             }

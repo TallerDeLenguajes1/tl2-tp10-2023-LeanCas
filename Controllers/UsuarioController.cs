@@ -63,7 +63,7 @@ public class UsuarioController : Controller
         try
         {
             if (!ModelState.IsValid) return RedirectToAction("Index");
-            if (UsuarioExiste(usuarioViewModel.Nombre))
+            if (UsuarioExiste(usuarioViewModel.Nombre, usuarioViewModel.Id))
             {
                 ModelState.AddModelError(nameof(usuarioViewModel.Nombre), "El Nombre de Usuario ya está en uso.");
                 return View(usuarioViewModel);
@@ -104,7 +104,7 @@ public class UsuarioController : Controller
         try
         {
             if (!ModelState.IsValid) return RedirectToAction("Index");
-            if (UsuarioExiste(usuarioViewModel.Nombre))
+            if (UsuarioExiste(usuarioViewModel.Nombre, usuarioViewModel.Id))
             {
                 ModelState.AddModelError(nameof(usuarioViewModel.Nombre), "El Nombre de Usuario ya está en uso.");
                 return View(usuarioViewModel);
@@ -137,12 +137,12 @@ public class UsuarioController : Controller
 
     }
 
-    private bool UsuarioExiste(string? nombre)
+    private bool UsuarioExiste(string? nombre, int id)
     {
         var lista = repository.GetAll();
         foreach (var u in lista)
         {
-            if (u.NombreDeUsuario == nombre)
+            if (u.NombreDeUsuario == nombre && u.Id != id)
             {
                 return true;
             }

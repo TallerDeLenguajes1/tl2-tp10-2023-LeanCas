@@ -214,13 +214,14 @@ public class UsuarioRepositorio : IUsuarioRepositorio
     {
         try
         {
-            var queryString = @"UPDATE Usuario SET nombre_de_usuario = @nombre_modificado WHERE id = @id_usuario;";
+            var queryString = @"UPDATE Usuario SET nombre_de_usuario = @nombre_modificado, password = @nuevo_password WHERE id = @id_usuario;";
             using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
             {
                 connection.Open();
 
                 var command = new SQLiteCommand(queryString, connection);
                 command.Parameters.Add(new SQLiteParameter("@nombre_modificado", usuario.NombreDeUsuario));
+                command.Parameters.Add(new SQLiteParameter("@nuevo_password", usuario.Password));
                 command.Parameters.Add(new SQLiteParameter("@id_usuario", id));
 
                 command.ExecuteNonQuery();
